@@ -1,0 +1,8 @@
+{
+  "name": "mysite",
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
