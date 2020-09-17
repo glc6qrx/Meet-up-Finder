@@ -1,5 +1,5 @@
 {
-  "name": "mysite",
+  "name": "project-2-13",
   "buildpacks": [
     {
       "url": "heroku/python"
