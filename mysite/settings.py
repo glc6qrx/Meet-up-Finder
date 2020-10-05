@@ -133,7 +133,7 @@ AUTHENTICATION_BACKENDS = (
  )
 
 SITE_ID = 2
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'https://meetup-finder-team-blu.herokuapp.com/accounts/google/login/callback/'
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
