@@ -16,28 +16,38 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <!-- navbar left -->
               <div class="navbar-nav">
-                <a class="nav-item nav-link" href="{% url 'meetupfinder:index' %}">Test</a>
+                <a class="nav-item nav-link" href="#">Test</a>
+              </div>
+              <!-- navbar right -->
+              <div class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'account_logout' %}">
+                  {% csrf_token %}
+                  {% if redirect_field_value %}
+                  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                  {% endif %}
+                  <button class="btn btn-link nav-item nav-link" type="submit">Sign Out</button>
+                </form>
+
+                {% else %}
+                <a class="nav-item nav-link" href="{% provider_login_url 'google' %}">Login with Google</a>
+                {% endif %}
               </div>
             </div>
         </nav>
 
         <div class="p-4" width="100%">
-            {% block content %}
-            {% endblock %}
-            
-            {% if user.is_authenticated %}
-            <h1>My Google Login Project</h1>
-            <p>Welcome, {{ user.username }} !</p>
+          {% if user.is_authenticated %}
+          <h3>Welcome, {{ user.username | title }}!</h3>
+          {% else %}
+          <h3>Please sign in to see content.</h3>
+          {% endif %}
           
-            {% else %}
-            <h1>My Google Login Project</h1>
-            <a href="{% provider_login_url 'google' %}">Login with Google</a>
-            {% endif %}
-        </div>
-
-        <div class="card-footer" style="position: absolute; bottom: 0; width: 100%">
-          <small>&#169 Copyright</small>
+          {% block content %}
+          {% endblock %}
+            
         </div>
         
         <!-- Bootstrap JS from CDN -->
