@@ -1,3 +1,9 @@
 language: python
 script:
-  - pytest
+- pytest
+deploy:
+  api_key:
+    secure: X1SXLF+7TRrdPySQBz5jXX3qL6bzPK/+RC8Us4fZwBqIVO7Wujja72Q774S1kix6w2OWnOkeirLTXf6hlC+guL8pzp7zFdDcFHKQxeF9JUXGCrOTz+Fj45JbodFkuiD9ozAnZH+9wNeEev50whWIZZxm8MAbCOEgHFgAviW6u9bmrqksJv7Znn7+g+iRwS0uWx4lOEGmTPqCeTZJi1D3IEP/H3o3aYG7Nbgcp2mIKBOHdm64TVxo68WSbxfF/FQc6yk+iFPS0vJVqPmJOiPE3L+KMSEjy0Ol3uhPeOrfThCnbOHYBjECE0OoqetcQPfTnHzSjgKYFrvTgRAVZvR9SJoePwbhm9SKm+g5f+3RN3Itsq80rpcIHnTH1FUyPE+uo5VDC+lUS3LnHFwTBWNAZdYaH8OwLprgbFskZbtAt1ZbuBn8+gku9BmvWvy0Z9lFvi25xAlBQwLQMRThEG01ZoCz/BG0xcyWLbWXO5X8WHNoXunttRgoLcyEsVvN/MyCDJ76q4XTqELczGfPCp/Gmvfad+qu/4DJx6jmnraYGPrLc3tMaJUcSDPs1Etj9TDhPiGOu41PfxCgbywDBXB1/Oc8lzgtf9uccCPkwfpzaOii4K/dupY9zGxfrt89CMJ3jhrew7JfHe5Fs7yOoSujWKnWuDwldDbE6f9c2GBTCBA=
+ app: meetup-finder-team-blu
+ on:
+   repo: uva-cs4340-f20/project-2-13
