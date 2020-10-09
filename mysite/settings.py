@@ -146,4 +146,11 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-django_heroku.settings(locals())
+
+# Activate Django-Heroku.
+try:
+    # Configure Django App for Heroku.
+    import django_heroku
+    django_heroku.settings(locals())
+except ImportError:
+    found = False
