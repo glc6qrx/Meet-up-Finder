@@ -1,0 +1,32 @@
+{% extends 'meetupfinder/base.html' %}
+
+{% block content %}
+
+    <h3>Events</h3>
+
+    {% for event in events %}
+    <div class="card shadow m-3" style="border: none; width: 50%">
+        <p class="card-header" style="background-color: #23395d; margin-bottom: 0px">
+            <a style="color: white">{{ event.event_name }}
+                <span style="float: right">#{{ event.id }}</span></a>
+        </p>
+        
+        <div class="card-body">
+            <div style="float: left; width: 70%">
+                <p style="margin-bottom: 0px"><strong>{{ event.event_date|date:'l, m/d/Y'}}</strong></p>
+                <p class="text-muted"> {{ event.event_date|date:'g:i A' }} – 
+                    {{ event.end_event_date|date:'g:i A' }}
+                </p>
+                <p>ADDRESS</p>
+                <p>Host: {{ event.event_host }}</p>
+                <p> {{ event.event_text }}</p>
+            </div>
+    
+            <div style="float: right; padding-top: 5px; margin-left: 3px">
+                <a class="btn btn-sm btn-success" href="#">Save</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}
