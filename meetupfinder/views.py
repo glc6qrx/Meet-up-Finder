@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, resolve
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Event
 from .forms import EventFilterForm

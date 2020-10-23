@@ -6,8 +6,8 @@ class Event(models.Model):
     event_name= models.CharField(max_length=200)
     event_text= models.CharField(max_length=400)
     event_host= models.CharField(max_length=200)
-    event_date= models.DateTimeField('event date')
-    end_event_date= models.DateTimeField('end event date')
+    event_date= models.DateTimeField('event date', null=True, blank=True)
+    end_event_date= models.DateTimeField('end event date', null=True, blank=True)
     def __str__(self):
        return self.event_text
 # location -- text field or something else
