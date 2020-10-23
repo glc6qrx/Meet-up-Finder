@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Event
+from .forms import EventFilterForm
 
 
 def index(request):
@@ -13,5 +14,27 @@ def events(request):
         print("NOT")
         return HttpResponseRedirect(reverse('meetupfinder:index'))
     
-    events = Event.objects.all()
-    return render(request, 'meetupfinder/events.html', {'title': 'Events', 'events': events})
+    #if form submission, validate data and filter
+    if request.method == 'POST':
+        form = EventFilterForm(request.POST)
+        if form.is_valid():
+            events = Event.objects.all()
+            #filter by name if provided
+            name = form.cleaned_data['name']
+            if name is not None:
+                events = events.filter(event_name__icontains=name)
+            #filter by start date if provided
+            start_date = form.cleaned_data['start_date']
+            if start_date is not None:
+                events = events.filter(event_date__date__gte=start_date)
+            #filter by end date if provided
+            end_date = form.cleaned_data['end_date']
+            if end_date is not None:
+                events = events.filter(end_event_date__date__lte=end_date)
+    
+    #otherwise, create blank form
+    else:
+        form = EventFilterForm()
+        events = Event.objects.all()
+    
+    return render(request, 'meetupfinder/events.html', {'title': 'Events', 'events': events, 'form': form})
