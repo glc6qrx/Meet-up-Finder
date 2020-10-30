@@ -5,5 +5,6 @@ app_name = 'meetupfinder'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('events/', views.events, name='events')
+    path('events/', views.events, name='events'),
+    path('profile/', views.profile, name='profile')
 ]

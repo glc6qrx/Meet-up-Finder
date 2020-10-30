@@ -8,7 +8,9 @@ from .forms import EventFilterForm
 def index(request):
     return render(request, 'meetupfinder/index.html')
 
-
+def profile(request):
+    return render(request, 'meetupfinder/profile.html')
+    
 def events(request):
     if not request.user.is_authenticated:    
         print("NOT")
