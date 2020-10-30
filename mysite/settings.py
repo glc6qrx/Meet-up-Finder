@@ -83,10 +83,16 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'project-2-13',
+    'USER': 'lfdiiltgmhlqos',
+    'PASSWORD': '28dee209f6b8757772f22306c01b20a45de6657d2fc5dbbaf8868986a2bfcfbb',
+    'HOST': 'ec2-35-172-85-250.compute-1.amazonaws.com',
+    'PORT': '5432',
     }
 }
+
+
 
 
 # Password validation
@@ -132,7 +138,7 @@ AUTHENTICATION_BACKENDS = (
  'allauth.account.auth_backends.AuthenticationBackend',
  )
 
-SITE_ID = 3
+SITE_ID = 4
 LOGIN_REDIRECT_URL = '/'
 
 SOCIALACCOUNT_PROVIDERS = {
