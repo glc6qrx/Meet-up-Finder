@@ -9,6 +9,11 @@ class Event(models.Model):
     event_date= models.DateTimeField('event date', null=True, blank=True)
     end_event_date= models.DateTimeField('end event date', null=True, blank=True)
     def __str__(self):
-       return self.event_text
+       return self.event_name
 # location -- text field or something else
 # categories (own model)
+class Category(models.Model):
+    category_name = models.CharField(max_length=200)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    def __str__(self):
+       return self.category_name
