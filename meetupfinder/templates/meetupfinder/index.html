@@ -1,13 +1,53 @@
 {% extends 'meetupfinder/base.html' %}
+{% load socialaccount %}
 
 {% block content %}
   {% if user.is_authenticated %}
-  <h3>Welcome, {{ user.username | title }}!</h3>
+    <h3>Welcome, {{ user.username | title }}!</h3>
+    <div class="row" style="justify-content: center">
+      <div class="card shadow-sm col-md-3 m-3 info-card">
+        <a href="{% url 'meetupfinder:events' %}" style="text-decoration: none; color: inherit">
+        <div class="card-body">
+          <h5 class="card-title">Find Events</h5>
+          <p class="card-text">View all of the events stored in the Meet-Up Finder system, and filter them based on
+            your criteria to find events you'd like to attend.</p>
+        </div>
+        </a>
+      </div>
+      <div class="card shadow-sm col-md-3 m-3 info-card">
+        <div class="card-body">
+          <h5 class="card-title">Add Event</h5>
+          <p class="card-text">Add a new event to the system to publicize it to all Meet-Up Finder users and
+            boost attendance at your event.</p>
+        </div>
+      </div>
+      <div class="card shadow-sm col-md-3 m-3 info-card">
+        <a href="{% url 'meetupfinder:profile' %}" style="text-decoration: none; color: inherit">
+        <div class="card-body">
+          <h5 class="card-title">View Profile</h5>
+          <p class="card-text">Visit your profile to see details about your account and view a list of all
+          upcoming events you're scheduled to attend.</p>
+        </div>
+        </a>
+      </div>
+    </div>
+  
   {% else %}
-  <h3>Please sign in to see content.</h3>
+    <div class="shadow-sm p-4 text-center mr-auto ml-auto mt-5" style="width: 50%; border: 1px solid rgba(0,0,0,.125)">
+      <h3 class="mb-4">Please sign in to see content.</h3>
+      <a href="{% provider_login_url 'google' %}" class="btn btn-primary">Login with Google</a>
+    </div>
   {% endif %}
   
 {% endblock %}
 
+
+{% block styles %}
+<style>
+    div.info-card:hover {
+      box-shadow: 0 .5rem 1rem rgba(0,0,0,.1)!important;
+    }
+</style>
+{% endblock %}
 
 
