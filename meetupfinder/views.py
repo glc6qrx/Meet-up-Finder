@@ -33,6 +33,10 @@ def events(request):
             end_date = form.cleaned_data['end_date']
             if end_date is not None:
                 events = events.filter(end_event_date__date__lte=end_date)
+            #filter by categories if provided
+            categoriesList = form.cleaned_data['category']
+            if categoriesList:
+                events = events.filter(category__id__in=categoriesList)
     
     #otherwise, create blank form
     else:
