@@ -31,28 +31,7 @@
 
     <div class="col-md-8 mb-5" style="float: right">
         {% for event in events %}
-        <div class="card shadow mt-3 mb-3 ml-4" style="border: none">
-            <p class="card-header" style="background-color: #23395d; margin-bottom: 0px">
-                <a style="color: white">{{ event.event_name }}
-                    <span style="float: right; opacity: 75%">{{ event.category }}</span></a>
-            </p>
-            
-            <div class="card-body">
-                <div style="float: left; width: 70%">
-                    <p style="margin-bottom: 0px"><strong>{{ event.event_date|date:'l, m/d/Y'}}</strong></p>
-                    <p class="text-muted"> {{ event.event_date|date:'g:i A' }} – 
-                        {{ event.end_event_date|date:'g:i A' }}
-                    </p>
-                    <p>ADDRESS</p>
-                    <p>Host: {{ event.event_host }}</p>
-                    <p> {{ event.event_text }}</p>
-                </div>
-        
-                <div style="float: right; padding-top: 5px; margin-left: 3px">
-                    <a class="btn btn-sm btn-success" href="#">Save</a>
-                </div>
-            </div>
-        </div>
+            {% include 'meetupfinder/event.html' %}
         {% endfor %}
     </div>
 

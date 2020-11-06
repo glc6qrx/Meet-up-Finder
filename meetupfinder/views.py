@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, resolve
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Event
@@ -9,11 +9,11 @@ def index(request):
     return render(request, 'meetupfinder/index.html')
 
 def profile(request):
-    return render(request, 'meetupfinder/profile.html')
+    attending_events = request.user.attending_events.all()
+    return render(request, 'meetupfinder/profile.html', {'attending_events': attending_events})
     
 def events(request):
-    if not request.user.is_authenticated:    
-        print("NOT")
+    if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('meetupfinder:index'))
     
     #if form submission, validate data and filter
@@ -44,3 +44,23 @@ def events(request):
         events = Event.objects.all()
     
     return render(request, 'meetupfinder/events.html', {'title': 'Events', 'events': events, 'form': form})
+
+
+def attend(request, event_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        event = get_object_or_404(Event, pk=event_id)
+        event.attending_users.add(request.user)
+        event.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        return HttpResponseRedirect(reverse('meetupfinder:index'))
+
+
+def cancel_attendance(request, event_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        event = get_object_or_404(Event, pk=event_id)
+        event.attending_users.remove(request.user)
+        event.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        return HttpResponseRedirect(reverse('meetupfinder:index'))

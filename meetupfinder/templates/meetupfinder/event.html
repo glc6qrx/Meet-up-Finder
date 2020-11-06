@@ -1,0 +1,37 @@
+<div class="card shadow mt-3 mb-3 ml-4" style="border: none">
+    <p class="card-header" style="background-color: #23395d; margin-bottom: 0px">
+        <a style="color: white">{{ event.event_name }} –
+            <span style="opacity: 75%">{{ event.category }}</span>
+            {% if event in user.attending_events.all %}
+                <span class="badge badge-pill badge-success ml-3" style="font-size: 0.875rem;
+                float: right">Attending</span>
+            {% endif %}
+        </a>
+    </p>
+    
+    <div class="card-body">
+        <div style="float: left; width: 70%">
+            <p style="margin-bottom: 0px"><strong>{{ event.event_date|date:'l, m/d/Y'}}</strong></p>
+            <p class="text-muted"> {{ event.event_date|date:'g:i A' }} – 
+                {{ event.end_event_date|date:'g:i A' }}
+            </p>
+            <p>ADDRESS</p>
+            <p>Host: {{ event.event_host }}</p>
+            <p> {{ event.event_text }}</p>
+        </div>
+
+        <div style="float: right; padding-top: 5px; margin-left: 3px">
+            {% if event in user.attending_events.all %}
+            <form method="post" action="{% url 'meetupfinder:cancel_attendance' event.id %}">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-sm btn-danger" value="Cancel Attendance">
+            </form>
+            {% else %}
+            <form method="post" action="{% url 'meetupfinder:attend' event.id %}">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-sm btn-success" value="Attend">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
