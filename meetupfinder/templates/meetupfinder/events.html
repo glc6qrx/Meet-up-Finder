@@ -4,7 +4,7 @@
 
     <h3>Events</h3>
 
-    <div class="col-md-4 mt-3 p-3 shadow" style="float: left">
+    <div class="col-md-4 mt-3 p-3 shadow-sm card" style="float: left">
         <h5 class="mb-3">Filter Results</h5>
         <form action="{% url 'meetupfinder:events' %}" method="post">
             {% csrf_token %}
@@ -20,6 +20,10 @@
                 {{ form.end_date.label }}
                 {{ form.end_date }}
             </div>
+            <div class="form-group">
+                {{ form.category.label }}
+                {{ form.category }}
+            </div>
 
             <input type="submit" class="btn btn-primary" value="Filter"/>
         </form>
@@ -30,7 +34,7 @@
         <div class="card shadow mt-3 mb-3 ml-4" style="border: none">
             <p class="card-header" style="background-color: #23395d; margin-bottom: 0px">
                 <a style="color: white">{{ event.event_name }}
-                    <span style="float: right">#{{ event.id }}</span></a>
+                    <span style="float: right; opacity: 75%">{{ event.category }}</span></a>
             </p>
             
             <div class="card-body">
