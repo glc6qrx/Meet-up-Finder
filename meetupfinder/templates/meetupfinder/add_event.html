@@ -1,0 +1,53 @@
+{% extends 'meetupfinder/base.html' %}
+
+{% block content %}
+
+    <h3>Add Event</h3>
+    <br>
+
+    <div class="col-md-4">
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <p class="alert alert-danger">{{ field.label }}: {{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        <form action="{% url 'meetupfinder:add_event' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.name.label }}
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                {{ form.description.label }}
+                {{ form.description }}
+            </div>
+            <div class="form-group">
+                {{ form.host.label }}
+                {{ form.host }}
+            </div>
+            <div class="form-group">
+                {{ form.date.label }}
+                {{ form.date }}
+            </div>
+            <div class="form-group">
+                {{ form.start_time.label }}
+                {{ form.start_time }}
+            </div>
+            <div class="form-group">
+                {{ form.end_time.label }}
+                {{ form.end_time }}
+            </div>
+            <div class="form-group">
+                {{ form.category.label }}
+                {{ form.category }}
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Create"/>
+        </form>
+    </div>
+    <br><br>
+
+{% endblock %}

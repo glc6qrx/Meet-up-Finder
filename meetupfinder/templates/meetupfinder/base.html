@@ -19,12 +19,13 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse ml-3" id="navbarNavAltMarkup">
               <!-- navbar left -->
               <div class="navbar-nav">
-                <a class="nav-item nav-link" href="{% url 'meetupfinder:events' %}">Events</a>
+                <a class="nav-item nav-link mr-3" href="{% url 'meetupfinder:events' %}">Find Events</a>
+                <a class="nav-item nav-link mr-3" href="{% url 'meetupfinder:add_event' %}">Add Event</a>
                 {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="{% url 'meetupfinder:profile' %}">Profile</a>
+                <a class="nav-item nav-link mr-3" href="{% url 'meetupfinder:profile' %}">Profile</a>
                 {% endif %}
               </div>
               <!-- navbar right -->

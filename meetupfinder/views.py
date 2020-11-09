@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, resolve
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Event
-from .forms import EventFilterForm
+from .forms import EventFilterForm, AddEventForm
+from datetime import datetime
 
 
 def index(request):
@@ -64,3 +65,39 @@ def cancel_attendance(request, event_id):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         return HttpResponseRedirect(reverse('meetupfinder:index'))
+
+
+def add_event(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('meetupfinder:index'))
+    
+    #if form submission, validate data and filter
+    if request.method == 'POST':
+        form = AddEventForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            host = form.cleaned_data['host']
+            date = form.cleaned_data['date']
+            start_time = form.cleaned_data['start_time']
+            end_time = form.cleaned_data['end_time']
+            category = form.cleaned_data['category']
+
+            #process the date and time info
+            start_date = datetime(date.year, date.month, date.day, 
+                start_time.hour, start_time.minute)
+            end_date = datetime(date.year, date.month, date.day,
+                end_time.hour, end_time.minute)
+
+            #create and save the new event to the database
+            event = Event(event_name=name, event_text=description, event_host=host, event_date=start_date,
+            end_event_date=end_date, category=category[0])
+            event.save()
+            return HttpResponseRedirect(reverse('meetupfinder:events'))
+        
+    #otherwise, create blank form
+    else:
+        form = AddEventForm()
+    
+    return render(request, 'meetupfinder/add_event.html', {'title': 'Add Event', 'form': form})
+
