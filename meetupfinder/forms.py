@@ -35,5 +35,5 @@ class AddEventForm(forms.Form):
     end_time = forms.TimeField(label="End Time", input_formats={'%I:%M %p'},
         widget=forms.TimeInput(attrs={'class': 'form-control', 'placeholder': '2:15 PM'}))
         
-    category = forms.ModelMultipleChoiceField(label="Categories (SHIFT-Click for multiple)",
-    queryset=Categories.objects.all(), widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+    category = forms.ModelChoiceField(label="Category",
+    queryset=Categories.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))

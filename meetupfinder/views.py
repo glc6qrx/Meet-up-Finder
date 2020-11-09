@@ -91,7 +91,7 @@ def add_event(request):
 
             #create and save the new event to the database
             event = Event(event_name=name, event_text=description, event_host=host, event_date=start_date,
-            end_event_date=end_date, category=category[0])
+            end_event_date=end_date, category=category)
             event.save()
             return HttpResponseRedirect(reverse('meetupfinder:events'))
         
