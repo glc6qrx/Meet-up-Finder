@@ -18,10 +18,44 @@
             <p>ADDRESS</p>
             <p>Host: {{ event.event_host }}</p>
             <p> {{ event.event_text }}</p>
-            <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCad_e1hrQFF93bb7t0wu2IqqyRwIDwDQo 
-                &q=City+Hall,New+York,NY" allowfullscreen></iframe>               
+            <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCf4vECJyy-z-pq7NV93fpwP5hlZYs8pmo&callback=initMap&libraries=&v=weekly"
+            defer
+            ></script>
+            <style type="text/css">
+                /* Set the size of the div element that contains the map */
+                #map {
+                  height: 400px;
+                  /* The height is 400 pixels */
+                  width: 100%;
+                  /* The width is the width of the web page */
+                }
+              </style>
+            <p> {{ event.locate.place }}</p>        
+            <p id="latitude" name= "{{ event.locate.latitude }}"> {{ event.locate.latitude }}</p> 
+            <p id="longitude" name= "{{ event.locate.longitude }}"> {{ event.locate.longitude }}</p>    
         </div>
-
+        <script>
+            // Initialize and add the map
+            function initMap() {
+              // The location of Uluru
+              const latit = document.getElementById("latitude").getAttribute("name")
+              const longit = document.getElementById("longitude").getAttribute("name")
+              console.log(latit)
+              const points = { lat: parseFloat(latit), lng: parseFloat(longit) };
+              // The map, centered at Uluru
+              const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 4,
+                center: points,
+              });
+              // The marker, positioned at Uluru
+              const marker = new google.maps.Marker({
+                position: points,
+                map: map,
+              });
+            }
+          </script>
+          <div id="map"></div>
         <div style="float: right; padding-top: 5px; margin-left: 3px">
             {% if event in user.attending_events.all %}
             <form method="post" action="{% url 'meetupfinder:cancel_attendance' event.id %}">

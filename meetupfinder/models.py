@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
+from django_google_maps import fields as map_fields
+from places.fields import PlacesField
 
 # Create your models here.
 # categories (own model)
@@ -20,14 +22,9 @@ class Event(models.Model):
     attending_users = models.ManyToManyField(User, related_name='attending_events', blank=True)
     
 
-    lon = models.FloatField(null=True, blank=True)
-    lat = models.FloatField(null=True, blank=True)
 
-    location = models.PointField(null=True, blank=True)
-    address = models.CharField(max_length=100, null=True, blank=True)
-    city = models.CharField(max_length=50, null=True, blank=True)
+    locate = PlacesField(null=True, blank=True)
 
-    mpoly = models.MultiPolygonField(null=True, blank=True)
 
     def __str__(self):
        return self.event_text

@@ -47,7 +47,18 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'django.contrib.gis',
     'rest_framework_gis',
+    
+    'django_google_maps',
+
+    'places',
+
 ]
+
+GOOGLE_MAPS_API_KEY = 'AIzaSyCf4vECJyy-z-pq7NV93fpwP5hlZYs8pmo'
+PLACES_MAPS_API_KEY='AIzaSyCf4vECJyy-z-pq7NV93fpwP5hlZYs8pmo'
+PLACES_MAP_WIDGET_HEIGHT=480
+PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
+PLACES_MARKER_OPTIONS='{"draggable": true}'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

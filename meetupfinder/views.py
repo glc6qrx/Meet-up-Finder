@@ -8,30 +8,10 @@ from django.contrib.gis.geos import fromstr
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
 from datetime import datetime
+import requests
 
 
-longitude = -80.191788
-latitude = 25.761681
 
-user_location = Point(longitude, latitude, srid=4326)
-
-class Home(generic.ListView):
-    model = Event
-
-
-    fields = ('lat', 'lon')
-    def form_valid(self, form, *args, **kwargs):
-        self.object = form.save(commit=False)
-        self.object.point = fromstr('POINT(%s %s)'%(self.object.lon, self.object.lat), srid=4326)
-        self.object.save()
-        return redirect('member:all_members')
-
-
-    context_object_name = 'events'
-    queryset = Event.objects.annotate(distance=Distance('location',
-    user_location)
-    ).order_by('distance')[0:6]
-    template_name = 'meetupfinder/events.html'
 
 
 
@@ -72,7 +52,9 @@ def events(request):
     else:
         form = EventFilterForm()
         events = Event.objects.all()
-    
+        r = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCf4vECJyy-z-pq7NV93fpwP5hlZYs8pmo")
+        print("test")
+        print(r.json()["results"][0]["geometry"]["location"]["lat"])
     return render(request, 'meetupfinder/events.html', {'title': 'Events', 'events': events, 'form': form})
 
 
