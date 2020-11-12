@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'django.contrib.gis',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'ENGINE': 'django.contrib.gis.db.backends.postgis',
     'NAME': 'd3d59dmoeuntnp',
     'USER': 'lfdiiltgmhlqos',
     'PASSWORD': '28dee209f6b8757772f22306c01b20a45de6657d2fc5dbbaf8868986a2bfcfbb',

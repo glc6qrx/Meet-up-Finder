@@ -2,8 +2,27 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, resolve
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Event
-from .forms import EventFilterForm, AddEventForm
+from .forms import EventFilterForm, AddEventForm, EventMapForm
+from django.views import generic
+from django.contrib.gis.geos import fromstr
+from django.contrib.gis.db.models.functions import Distance
+from django.contrib.gis.geos import Point
 from datetime import datetime
+
+
+longitude = -80.191788
+latitude = 25.761681
+
+user_location = Point(longitude, latitude, srid=4326)
+
+class Home(generic.ListView):
+    model = Event
+    context_object_name = 'events'
+    queryset = Event.objects.annotate(distance=Distance('location',
+    user_location)
+    ).order_by('distance')[0:6]
+    template_name = 'meetupfinder/events.html'
+
 
 
 def index(request):

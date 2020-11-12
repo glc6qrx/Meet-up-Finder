@@ -1,5 +1,6 @@
 from django import forms
 from .models import Categories
+from django.contrib.gis import forms
 
 class EventFilterForm(forms.Form):
     name = forms.CharField(label='Event Name', max_length=200, required=False,
@@ -37,3 +38,7 @@ class AddEventForm(forms.Form):
         
     category = forms.ModelChoiceField(label="Category",
     queryset=Categories.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
+
+class EventMapForm(forms.Form):
+    map = forms.MultiPolygonField(widget = 
+    forms.OSMWidget(attrs = {'map_width': 512, 'map_height': 300}))
