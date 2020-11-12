@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'django.contrib.gis',
-    'rest_framework_gis',
     
     'django_google_maps',
 
