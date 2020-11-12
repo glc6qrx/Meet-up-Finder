@@ -2,8 +2,6 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
-from django.contrib.gis.measure import Distance
-from django.contrib.gis.geos import Point
 
 # Create your models here.
 # categories (own model)
@@ -22,18 +20,8 @@ class Event(models.Model):
     attending_users = models.ManyToManyField(User, related_name='attending_events', blank=True)
     
 
-    lat = models.FloatField(min_value=-90, max_value=90)
-    lon = models.FloatField(min_value=-180, max_value=180)
-
-    @property
-    def lon(self):
-        return self.location.x
-    
-    @property
-    def lat(self):
-        return self.location.y
-
-    place = geos.Point(data['lng'], data['lat'], srid=4326)
+    lon = models.FloatField(null=True, blank=True)
+    lat = models.FloatField(null=True, blank=True)
 
     location = models.PointField(null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
