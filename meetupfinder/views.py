@@ -17,6 +17,16 @@ user_location = Point(longitude, latitude, srid=4326)
 
 class Home(generic.ListView):
     model = Event
+
+
+    fields = ('lat', 'lon')
+    def form_valid(self, form, *args, **kwargs):
+        self.object = form.save(commit=False)
+        self.object.point = fromstr('POINT(%s %s)'%(self.object.lon, self.object.lat), srid=4326)
+        self.object.save()
+        return redirect('member:all_members')
+
+
     context_object_name = 'events'
     queryset = Event.objects.annotate(distance=Distance('location',
     user_location)
