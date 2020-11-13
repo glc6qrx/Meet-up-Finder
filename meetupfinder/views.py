@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Event
 from .forms import EventFilterForm, AddEventForm
 from datetime import datetime
+import requests
 
 
 def index(request):
@@ -43,7 +44,9 @@ def events(request):
     else:
         form = EventFilterForm()
         events = Event.objects.all()
-    
+        r = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCf4vECJyy-z-pq7NV93fpwP5hlZYs8pmo")
+        print("test")
+        print(r.json()["results"][0]["geometry"]["location"]["lat"])
     return render(request, 'meetupfinder/events.html', {'title': 'Events', 'events': events, 'form': form})
 
 
