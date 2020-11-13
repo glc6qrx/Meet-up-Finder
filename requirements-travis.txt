@@ -4,4 +4,3 @@ django-heroku
 django-allauth
 django-google-maps
 dj-places
-GDAL
