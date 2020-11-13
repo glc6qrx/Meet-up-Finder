@@ -1,6 +1,6 @@
 from django.contrib import admin
-from django.contrib.gis import admin
-from django.contrib.gis.admin import OSMGeoAdmin
+#from django.contrib.gis import admin
+#from django.contrib.gis.admin import OSMGeoAdmin
 from django_google_maps import widgets as map_widgets
 from django_google_maps import fields as map_fields
 

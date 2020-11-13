@@ -2,11 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, resolve
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Event
-from .forms import EventFilterForm, AddEventForm, EventMapForm
+from .forms import EventFilterForm, AddEventForm#EventMapForm
 from django.views import generic
-from django.contrib.gis.geos import fromstr
-from django.contrib.gis.db.models.functions import Distance
-from django.contrib.gis.geos import Point
+#from django.contrib.gis.geos import fromstr
+#from django.contrib.gis.db.models.functions import Distance
+#from django.contrib.gis.geos import Point
 from datetime import datetime
 import requests
 
