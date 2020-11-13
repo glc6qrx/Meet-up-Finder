@@ -6,7 +6,7 @@ from django_google_maps import fields as map_fields
 from places.fields import PlacesField
 
 # Create your models here.
-# categories (own model)
+# Categories (own model)
 class Categories(models.Model):
     cat_name= models.CharField(max_length=200)
     def __str__(self):
