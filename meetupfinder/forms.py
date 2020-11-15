@@ -35,11 +35,9 @@ class AddEventForm(forms.Form):
     end_time = forms.TimeField(label="End Time", input_formats={'%I:%M %p'},
         widget=forms.TimeInput(attrs={'class': 'form-control', 'placeholder': '2:15 PM'}))
     
-    lat = forms.CharField(label='Event Latitude', max_length=200,
-        widget=forms.TextInput(attrs={'class': 'form-control'}))
+    address = forms.CharField(label='Address', max_length=200,
+        widget=forms.TextInput(attrs={'class': 'form-control',
+        'placeholder': '1600 Amphitheatre Parkway, Mountain View, CA'}))
         
-    lon = forms.CharField(label='Event Longitude', max_length=200,
-        widget=forms.TextInput(attrs={'class': 'form-control'}))
-        
-    category = forms.ModelChoiceField(label="Category",
-    queryset=Categories.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
+    category = forms.ModelChoiceField(label="Category", queryset=Categories.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'}))
