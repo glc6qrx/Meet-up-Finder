@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Event
 from .forms import EventFilterForm, AddEventForm
 from datetime import datetime
+from places.fields import PlacesField
+from json import dumps
 import requests
 
 
@@ -43,11 +45,15 @@ def events(request):
     #otherwise, create blank form
     else:
         form = EventFilterForm()
-        events = Event.objects.all()
-        r = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCf4vECJyy-z-pq7NV93fpwP5hlZYs8pmo")
-        print("test")
-        print(r.json()["results"][0]["geometry"]["location"]["lat"])
-    return render(request, 'meetupfinder/events.html', {'title': 'Events', 'events': events, 'form': form})
+        events = Event.objects.order_by('-event_date')
+        
+    locations = []
+    for event in events:
+        locations.append([event.event_name, event.address, float(event.latitude), float(event.longitude)])
+    locationData = dumps({'locations': locations})
+    
+    return render(request, 'meetupfinder/events.html', {'title': 'Events', 'events': events, 
+    'locationData': locationData, 'form': form})
 
 
 def attend(request, event_id):
@@ -85,16 +91,23 @@ def add_event(request):
             start_time = form.cleaned_data['start_time']
             end_time = form.cleaned_data['end_time']
             category = form.cleaned_data['category']
+            address = form.cleaned_data['address']
 
             #process the date and time info
             start_date = datetime(date.year, date.month, date.day, 
                 start_time.hour, start_time.minute)
             end_date = datetime(date.year, date.month, date.day,
                 end_time.hour, end_time.minute)
+            
+            #process address data with Google Maps Geocoding API
+            api_key = "AIzaSyCf4vECJyy-z-pq7NV93fpwP5hlZYs8pmo"
+            r = requests.get(f"https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={api_key}")
+            latitude = r.json()["results"][0]["geometry"]["location"]["lat"]
+            longitude = r.json()["results"][0]["geometry"]["location"]["lng"]
 
             #create and save the new event to the database
             event = Event(event_name=name, event_text=description, event_host=host, event_date=start_date,
-            end_event_date=end_date, category=category)
+            end_event_date=end_date, category=category, address=address, latitude=latitude, longitude=longitude)
             event.save()
             return HttpResponseRedirect(reverse('meetupfinder:events'))
         

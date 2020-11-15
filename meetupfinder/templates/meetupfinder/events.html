@@ -4,7 +4,7 @@
 
     <h3>Events</h3>
 
-    <div class="col-md-4 mt-3 p-3 shadow-sm card" style="float: left">
+    <div class="mt-3 p-3 shadow-sm card" style="float: left; width: 20%; height: 500px">
         <h5 class="mb-3">Filter Results</h5>
         <form action="{% url 'meetupfinder:events' %}" method="post">
             {% csrf_token %}
@@ -29,10 +29,58 @@
         </form>
     </div>
 
-    <div class="col-md-8 mb-5" style="float: right">
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCf4vECJyy-z-pq7NV93fpwP5hlZYs8pmo&callback=initMap&libraries=&v=weekly"
+    defer></script>
+
+    <script>
+        // Initialize and add the map
+        function initMap() {
+          var infowindow = new google.maps.InfoWindow({})
+          var marker, count;
+          
+          var locationData = JSON.parse("{{locationData|escapejs}}");
+          var locations = locationData['locations']
+
+          const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 3,
+            center: {'lat': 41.850033, 'lng': -87.6500523},
+          });
+
+          for(count = 0; count < locations.length; count++){
+              marker = new google.maps.Marker({
+                  position: {lat: parseFloat(locations[count][2]), lng: parseFloat(locations[count][3])},
+                  map: map,
+                  title: locations[count][0]
+              });
+              google.maps.event.addListener(marker, 'click', (function(marker, count){
+                return function(){
+                    infowindow.setContent("" + locations[count][0] + ': ' + locations[count][1]);
+                    infowindow.open(map, marker);
+                }
+              })(marker, count));
+          }
+        }
+    </script>
+    <div id="map" class="ml-4 mt-3" style="float: left"></div>
+
+    <div class="mt-3 mb-5" style="float: left; height: 500px; width: 38%">
+        <h5 class="ml-4" id="locations" value="{{ locations }}">Results</h5>
+        <div style="overflow-y: scroll; height: 470px">
         {% for event in events %}
             {% include 'meetupfinder/event.html' %}
         {% endfor %}
+        </div>
     </div>
 
+{% endblock %}
+
+{% block styles %}
+<style type="text/css">
+    /* Set the size of the div element that contains the map */
+    #map {
+      height: 500px;
+      width: 40%;
+    }
+</style>
 {% endblock %}
