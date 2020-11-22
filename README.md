@@ -6,8 +6,8 @@ We use google OAuth as a login, you can login in and out using the button on the
 ### Something meaninful based on profile
 You can save events you are attending to your profile, and you can view those events and information about your profile on the profile page (profile button in top menu)
 ### Third Party API
-We use geodjango to display the location of the events on a map. This map can be viewed on the find events page in the top menu. 
-### Project archetecture requirements
+We use geodjango to display the location of the events on a map. This map can be viewed on the find events page in the top menu. We also use the Google Maps API to display this map, and the Google Geocoding API to convert user-provided event addresses to longitude/latitude coordinates that can be displayed on the map.
+### Project architecture requirements
 Our project is built with language (Python 3), framework (Django 3.1), build environment (Travis CI), source control management (GitHub), and cloud hosting (Heroku).
 ### Postgres
 Postgres is our data engine, you can see so in the settings.py file
