@@ -16,8 +16,8 @@ Postgres is our data engine, you can see so in the settings.py file
 ### The system shall allow a user to save a set of event types, causes, etc. with their account.
 The user can save events to a profile that is made by Google Login. 
 ### The system shall show events within a certain GPS radius of the user taking place within a specific time range
-You can view event location using the map on the Find events page, or filter results with the form that is on the right of the Find Events page. You can filter what events show up on the map using this. 
+You can view event location using the map on the Find Events page and filter results with the form that is on the left of the Find Events page. The user can provide a starting address and a distance range, and can filter to only see events within the provided range of the starting address using this.
 ### Users shall be able to search for events based upon time, type, location, cause, etc
-Users can filter events on the find events page using the form on the right side of the page
+Users can filter events on the find events page using the form on the left side of the page, with parameters such as event name, date range, and event category.
 ### Users shall be able to submit events to the system for posting.
-Users can add events using the Add events page on the top menu
+Users can add events using the Add Events page on the top menu
