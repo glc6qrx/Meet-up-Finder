@@ -6,7 +6,7 @@ from .forms import EventFilterForm, AddEventForm
 from datetime import datetime
 from places.fields import PlacesField
 from json import dumps
-import requests
+import requests, math, decimal
 
 
 def index(request):
@@ -41,6 +41,18 @@ def events(request):
             categoriesList = form.cleaned_data['category']
             if categoriesList:
                 events = events.filter(category__id__in=categoriesList)
+            #filter by distance range if range and user location provided
+            location = form.cleaned_data['location']
+            form_range = form.cleaned_data['distance']
+            if location is not None and form_range is not None:
+                api_key = "AIzaSyCf4vECJyy-z-pq7NV93fpwP5hlZYs8pmo"
+                r = requests.get(f"https://maps.googleapis.com/maps/api/geocode/json?address={location}&key={api_key}")
+                user_lat = r.json()["results"][0]["geometry"]["location"]["lat"]
+                user_lon = r.json()["results"][0]["geometry"]["location"]["lng"]
+                # if an event is farther away from the user than the specified range, remove it from results
+                for event in events:
+                    if calculateDistance(event.latitude, event.longitude, user_lat, user_lon) > form_range:
+                        events = events.exclude(id=event.id)
     
     #otherwise, create blank form
     else:
@@ -54,6 +66,17 @@ def events(request):
     
     return render(request, 'meetupfinder/events.html', {'title': 'Events', 'events': events, 
     'locationData': locationData, 'form': form})
+
+
+#helper function to find distance (in miles) between two lat-long points using Law of Cosines
+def calculateDistance(lat1, lng1, lat2, lng2):
+	φ1 = decimal.Decimal(lat1) * decimal.Decimal(math.pi/180)
+	φ2 = decimal.Decimal(lat2) * decimal.Decimal(math.pi/180)
+	Δλ = (decimal.Decimal(lng2)-decimal.Decimal(lng1)) * decimal.Decimal(math.pi/180)
+	R = 6371
+	dKm = math.acos( math.sin(φ1)*math.sin(φ2) + math.cos(φ1)*math.cos(φ2) * math.cos(Δλ) ) * R
+	distMI = dKm * 0.539957 #km to miles
+	return distMI
 
 
 def attend(request, event_id):

@@ -3,16 +3,23 @@ from .models import Categories
 
 class EventFilterForm(forms.Form):
     name = forms.CharField(label='Event Name', max_length=200, required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control'}))
+        widget=forms.TextInput(attrs={'class': 'form-control form-control-sm'}))
     
     start_date = forms.DateField(label='Start Date', required=False, input_formats={'%m/%d/%y'},
-        widget=forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'MM/DD/YY'}))
+        widget=forms.DateInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'MM/DD/YY'}))
 
     end_date = forms.DateField(label='End Date', required=False, input_formats={'%m/%d/%y'},
-        widget=forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'MM/DD/YY'}))
+        widget=forms.DateInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'MM/DD/YY'}))
         
     category = forms.ModelMultipleChoiceField(label="Categories (SHIFT-Click for multiple)", required=False,
-    queryset=Categories.objects.all(), widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+        queryset=Categories.objects.all(), widget=forms.SelectMultiple(attrs={'class': 'form-control form-control-sm'}))
+
+    location = forms.CharField(label='My Address', max_length=200, required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control form-control-sm'}))
+    
+    distance = forms.IntegerField(label='Filtering Range (miles)', required=False,
+        widget = forms.NumberInput(attrs={'min': '10', 'class': 'form-control form-control-sm',
+        'placeholder': 'Requires address'}))
 
 
 
