@@ -76,7 +76,7 @@ def calculateDistance(lat1, lng1, lat2, lng2):
 	Δλ = (decimal.Decimal(lng2)-decimal.Decimal(lng1)) * decimal.Decimal(math.pi/180)
 	R = 6371
 	dKm = math.acos( math.sin(φ1)*math.sin(φ2) + math.cos(φ1)*math.cos(φ2) * math.cos(Δλ) ) * R
-	distMI = dKm * 0.539957 #km to miles
+	distMI = dKm * 0.621371 #km to miles
 	return distMI
 
 
