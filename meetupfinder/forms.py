@@ -1,5 +1,6 @@
 from django import forms
 from .models import Categories
+from django.core.exceptions import ValidationError
 
 class EventFilterForm(forms.Form):
     name = forms.CharField(label='Event Name', max_length=200, required=False,
@@ -20,6 +21,19 @@ class EventFilterForm(forms.Form):
     distance = forms.IntegerField(label='Filtering Range (miles)', required=False,
         widget = forms.NumberInput(attrs={'min': '10', 'class': 'form-control form-control-sm',
         'placeholder': 'Requires address'}))
+
+    #if one of distance or location provided, other must also be provided
+    def clean(self):
+        cleaned_data = super().clean()
+        location = cleaned_data.get("location")
+        distance = cleaned_data.get("distance")
+        if location is not "" or distance is not None:
+            if location is "":
+                self.add_error('location', 
+                    ValidationError("Please provide a starting address along with the filtering range."))
+            if distance is None:
+                self.add_error('distance', 
+                    ValidationError("Please provide a filtering range along with the starting address."))
 
 
 

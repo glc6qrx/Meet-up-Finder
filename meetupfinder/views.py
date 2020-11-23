@@ -20,14 +20,15 @@ def events(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('meetupfinder:index'))
     
+    events = Event.objects.order_by('-event_date')
+    
     #if form submission, validate data and filter
     if request.method == 'POST':
         form = EventFilterForm(request.POST)
         if form.is_valid():
-            events = Event.objects.all()
             #filter by name if provided
             name = form.cleaned_data['name']
-            if name is not None:
+            if name is not "":
                 events = events.filter(event_name__icontains=name)
             #filter by start date if provided
             start_date = form.cleaned_data['start_date']
@@ -44,7 +45,7 @@ def events(request):
             #filter by distance range if range and user location provided
             location = form.cleaned_data['location']
             form_range = form.cleaned_data['distance']
-            if location is not None and form_range is not None:
+            if location is not "" and form_range is not None:
                 api_key = "AIzaSyCf4vECJyy-z-pq7NV93fpwP5hlZYs8pmo"
                 r = requests.get(f"https://maps.googleapis.com/maps/api/geocode/json?address={location}&key={api_key}")
                 user_lat = r.json()["results"][0]["geometry"]["location"]["lat"]
@@ -57,8 +58,8 @@ def events(request):
     #otherwise, create blank form
     else:
         form = EventFilterForm()
-        events = Event.objects.order_by('-event_date')
         
+    #create location information for map
     locations = []
     for event in events:
         locations.append([event.event_name, event.address, float(event.latitude), float(event.longitude)])
