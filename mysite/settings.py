@@ -12,10 +12,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 REFERENCES
 Title: Django
 Author: Django Software Foundation
-Data: 2020
+Date: 2020
 Version: 3.1.3
 URL: https://www.djangoproject.com/
-Software Licence: BSD3
+Software License: BSD3
  
 Title: Postgres
 Author: The PostgreSQL Global Development Group
@@ -23,6 +23,20 @@ Date: 1996-2020
 Version: 13.0
 URL:https://www.postgresql.org/
 Software License: PostgreSQL license
+
+Title: Bootstrap
+Author: Mark Otto and Jacob Thornton
+Date: 2020
+Version: 4.3
+URL: https://getbootstrap.com/docs/4.3/getting-started/introduction/
+Software License: MIT License
+
+Title: django-places
+Author: Oscar Cortez
+Date: 2020
+Version: 4.0.0
+URL: https://github.com/oscarmcm/django-places
+Software License: MIT License
 
 """
 
