@@ -8,6 +8,22 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
+
+REFERENCES
+Title: Django
+Author: Django Software Foundation
+Data: 2020
+Version: 3.1.3
+URL: https://www.djangoproject.com/
+Software Licence: BSD3
+ 
+Title: Postgres
+Author: The PostgreSQL Global Development Group
+Date: 1996-2020
+Version: 13.0
+URL:https://www.postgresql.org/
+Software License: PostgreSQL license
+
 """
 
 from pathlib import Path
